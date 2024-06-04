@@ -43,5 +43,10 @@
         "codigo": 10,
         "email": "teeet@teere.com",
         "senha": "1"
+    },
+    {
+        "codigo": 11,
+        "email": "lucas2@gmail.com",
+        "senha": "lucas2"
     }
 ]

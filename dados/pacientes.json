@@ -64,5 +64,16 @@
         "altura": 150,
         "codigo_diabete": 5,
         "comorbidades": "dfdfd fdfd"
+    },
+    {
+        "codigo": 7,
+        "codigo_usuario": 11,
+        "nome": "LUCAS LIMA",
+        "idade": 18,
+        "codigo_sexo": "M",
+        "peso": 88,
+        "altura": 169,
+        "codigo_diabete": 5,
+        "comorbidades": "N\u00e3o tenho"
     }
 ]
