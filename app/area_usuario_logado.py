@@ -7,7 +7,7 @@ def tela_principal(codigo_usuario):
     limpa_tela()
     nome_sistema()
     paciente = buscar_paciente_por_codigo_usuario(codigo_usuario)
-    print("Usuário: ", paciente.nome)
+    print("Usuário: ", paciente['nome'])
     print()
     menu_principal()
     print()
@@ -23,13 +23,11 @@ def tela_principal(codigo_usuario):
             tela_principal(codigo_usuario)
             
         case '3':
-            print("opcao 3")
-            input("pressione qualquer tecla")
+            listar_alimentacao(codigo_usuario)
             tela_principal(codigo_usuario)
             
         case '4':
-            print("opcao 4")
-            input("pressione qualquer tecla")
+            listar_glicemia(codigo_usuario)
             tela_principal(codigo_usuario)
             
         case '0':

@@ -39,10 +39,25 @@ para encerrar digite algo invalido:\n""")
 
 def listar_medicacoes(codigo_usaurio):
 	paciente = buscar_paciente_por_codigo_usuario(codigo_usaurio)
-	medicacoes = buscar_medicacoes_por_paciente(paciente.codigo)
+	medicacoes = buscar_medicacoes_por_paciente(paciente['codigo'])
 
 	limpa_tela()
 	nome_sistema()
-	print("Medicações")
+	print("Medicações:")
 	listar_dados(medicacoes)
-	input("pressione qualquer tecla...")
+	opcao = input("Deseja alterar (S/N)?: ").upper()
+	while opcao != 'S' and opcao != 'N':
+		opcao = input("Deseja alterar (S/N)?: ")
+	
+	if opcao == "S":
+		print()
+		codigo_medicacao = input("Informe o código da medicacao: ")
+		medicacao = buscar_medicacao(int(codigo_medicacao))
+		nome = input("Nome: ")
+		hora_inicial = input("Hora inicial: ")
+		periodicidade = input("Periodicidade: ")
+		dosagem = input("Dosagem: ")
+		lembrar = input("Lembrar (S/N)?: ")
+		resultado = atualizar_medicacao(medicacao['codigo'], medicacao['codigo_paciente'], nome, dosagem, hora_inicial, periodicidade, lembrar)
+	
+	input("Digite qualquer tecla...")

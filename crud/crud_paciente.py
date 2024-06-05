@@ -78,16 +78,7 @@ def buscar_paciente(codigo):
     pacientes = _ler_todos()
     for r in pacientes:
         if r['codigo'] == codigo:
-            return Paciente(r['codigo'], 
-                            r['codigo_usuario'], 
-                            r['nome'],
-                            r['idade'], 
-                            r['codigo_sexo'], 
-                            r['peso'], 
-                            r['altura'],
-                            r['codigo_diabete'],
-                            r['comorbidades'])
-
+            return r
     print("Paciente não encontrado")
     return -1
 
@@ -96,15 +87,7 @@ def buscar_paciente_por_codigo_usuario(codigo_usuario):
     pacientes = _ler_todos()
     for r in pacientes:
         if r['codigo_usuario'] == codigo_usuario:
-            return Paciente(r['codigo'], 
-                            r['codigo_usuario'], 
-                            r['nome'], 
-                            r['idade'], 
-                            r['codigo_sexo'], 
-                            r['peso'], 
-                            r['altura'],
-                            r['codigo_diabete'],
-                            r['comorbidades'])
+            return r
         
     print("Paciente não encontrado")
     return -1

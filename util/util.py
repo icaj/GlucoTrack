@@ -23,12 +23,11 @@ def listar_dados(dicionario):
     # define os títulos da tabela
     tabela.field_names = campos
 
-    linha = ""
     for dado in dicionario:
-        for campo in campos:
-            linha = dado[campo]
+        linha = dado.values()
         tabela.add_row(linha)
-
+#    tabela.del_column('codigo')
+    tabela.del_column('codigo_paciente')
     print(tabela)
 
 # função que valida se uma string contem um endereço de e-mail

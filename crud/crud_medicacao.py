@@ -31,7 +31,7 @@ def _salvar_todos(registros):
 # devolve o codigo do registro se operacao comsucesso
 def _inserir(medicacao):
     # valida se o campo codigo_paciente está preenchindo
-    if medicacao.codigo_paciente == None:
+    if medicacao['codigo_paciente'] == None:
         return -1
       
     medicacoes = _ler_todos()
@@ -40,18 +40,12 @@ def _inserir(medicacao):
     for r in medicacoes:
         if r['codigo'] > proximo_codigo:
             proximo_codigo = r['codigo']
-            
-    medicacao_dic = {'codigo': proximo_codigo + 1, 
-                     'codigo_paciente': medicacao.codigo_paciente, 
-                     'nome': medicacao.nome,
-                     'dosagem': medicacao.dosagem, 
-                     'hora_inicial': medicacao.hora_inicial, 
-                     'periodicidade': medicacao.periodicidade, 
-                     'lembrar': medicacao.lembrar}
-    
-    medicacoes.append(medicacao_dic)
+
+    medicacao['codigo'] = proximo_codigo +1
+
+    medicacoes.append(medicacao)
     _salvar_todos(medicacoes)
-    return medicacao_dic['codigo']
+    return medicacao['codigo']
 
 # atualiza um objeto no banco
 # se não encontrar devolve -1
@@ -59,20 +53,19 @@ def _atualizar(medicacao):
     encontrou = 1
     medicacoes = _ler_todos()
     for r in medicacoes:
-        if r['codigo'] == medicacao.codigo:
-            r['codigo_paciente'] = medicacao.codigo_paciente
-            r['nome'] = medicacao.nome
-            r['dosagem'] = medicacao.dosagem
-            r['hora_inicial'] = medicacao.hora_inicial
-            r['periodicidade'] = medicacao.periodicidade
-            r['lembrar'] = medicacao.lembrar
+        if r['codigo'] == medicacao['codigo']:
+            r['nome'] = medicacao['nome']
+            r['dosagem'] = medicacao['dosagem']
+            r['hora_inicial'] = medicacao['hora_inicial']
+            r['periodicidade'] = medicacao['periodicidade']
+            r['lembrar'] = medicacao['lembrar']
             encontrou = 1
             break
     _salvar_todos(medicacoes)
     return encontrou
 
-def inserir_medicacao(codigo_paciente, nome, dosagem, hora_inical, periodicidade, lembrar):
-    medicacao = Medicacao(None, codigo_paciente, nome, dosagem, hora_inical, periodicidade, lembrar)
+def inserir_medicacao(codigo_paciente, nome, dosagem, hora_inicial, periodicidade, lembrar):
+    medicacao = {'codigo': "", 'codigo_paciente': codigo_paciente, 'nome': nome, 'dosagem': dosagem, 'hora_idicial': hora_inicial, 'periodicidade': periodicidade, 'lembrar': lembrar}
     return _inserir(medicacao)
     
 # faz uma busca do registro no arquivo pelo codigo especificado

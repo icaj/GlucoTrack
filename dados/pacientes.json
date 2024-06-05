@@ -24,13 +24,13 @@
     {
         "codigo": 3,
         "codigo_usuario": 3,
-        "nome": "teste teste teste teste",
-        "idade": "34",
+        "nome": "TESTE TESTE TESTE TESTE",
+        "idade": 34,
         "codigo_sexo": "F",
-        "peso": 44.0,
-        "altura": 333.0,
-        "codigo_diabete": 3,
-        "comorbidades": ""
+        "peso": 60,
+        "altura": 158,
+        "codigo_diabete": 1,
+        "comorbidades": "n\u00e3o possui"
     },
     {
         "codigo": 4,
