@@ -7,7 +7,7 @@ form_medicacao = [
 	"Nome da medicacao: ",
 	"Dose prescrita: ",
 	"Horario diario inicial: ", 
-	lambda u: u.strptime(formato_dh.hora),
+	lambda u: datetime.strptime(u, formato_dh.hora),
 	"Tomar a cada quantas horas: ", int, 
 	"Alarmar nesses horarios? [s/n] ", checar_sn,
 ]
@@ -41,7 +41,11 @@ def medicacao_editar(id_pct):
 	registros = medicacao_listar(id_pct, w=False)
 	cod = input("ID do que deseja editar: ")
 	med = filter(lambda r: r.codigo == cod, registros)
-	med = med[0]
+    if len(med) > 0:
+        med = med[0]
+    else:
+        print("Nao encontrado!")
+        return
 	resp = form_padrao(form_medicacao, [
 		med.nome, med.dosagem, med.hora_inicial, 
 		med.periodicidade, med.lembrar,

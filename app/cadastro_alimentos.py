@@ -7,7 +7,7 @@ from datetime import datetime
 form_alimentos = [
     "Nome do alimento: ",
     "Data e hora da ingestao [dd/mes hh:min] : ", 
-    lambda u: u.strptime(formato_dh.user),
+    lambda u: datetime.strptime(u, formato_dh.user),
     "Proteínas (em gramas): ", float,
     "Gorduras (em gramas): ", float,
     "Carboidratos (em gramas): ", float,
@@ -53,7 +53,12 @@ def alimentos_listar(id_pct, w=True):
 def alimentos_editar(id_pct):
     registros = alimentos_listar(id_pct, w=False)
     cod = input("ID do que deseja editar: ")
-    reg = filter(lambda r: r.codigo == cod, registros)[0]
+    reg = filter(lambda r: r.codigo == cod, registros)
+    if len(reg) > 0:
+        reg = reg[0]
+    else:
+        print("Nao encontrado!")
+        return
     resp = form_padrao(form_alimentos, [ 
         reg.nome, reg.data, reg.proteinas, reg.gorduras, reg.carboidratos
     ])

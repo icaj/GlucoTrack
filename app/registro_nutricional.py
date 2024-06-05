@@ -1,111 +1,81 @@
 import json
 from datetime import datetime
+from crud.crud_registro_nutricional import *
+from util.util import *
 import os
 
-def limpa_tela():
-    os.system('cls' if os.name == 'nt' else 'clear')
+def calc_calorias(pr, go, ca):
+    return (ca * 4) + (pr * 4) + (go * 9)
 
-def nome_registro_alimentos():
-    print("=========================================================================================")
-    print("======================== Registro de Alimentos - Versão 1.0 =============================")
-    print('')
+def adicionar_registro(id_pct):
+    limpa_tela()
+    nome_sistema()
+    alimento = input("Nome do alimento: ")
+    carboidratos = float(input("Carboidratos (em gramas): "))
+    proteinas = float(input("Proteínas (em gramas): "))
+    gorduras = float(input("Gorduras (em gramas): "))
+    
+    calorias = (carboidratos * 4) + (proteinas * 4) + (gorduras * 9)
+    print(f"Calorias: {calorias}")
 
-class RegistroNutricional:
-    def __init__(self):
-        self.registros = []
-        self.carregar_de_json("alimentos.json")
+    data_hora = input("Data e hora da ingestao [dd/mes hh:min] : ")
+    data_hora = datetime.strptime(data_hora, formato_dh.user)
+    
+    resultado = inserir_registro_nutricional(id_pct, 
+        alimento, data_hora, calorias, proteinas, gorduras, carboidratos)
+    
+    if resultado <= 0:
+        print_wait("ERRO na inclusão do registro nutricional!")
+    else:
+        print_wait("Registro cadastrado com sucesso!")
+    return resultado
 
-    def adicionar_registro(self):
-        limpa_tela()
-        nome_registro_alimentos()
-        alimento = input("Nome do alimento: ")
-        carboidratos = float(input("Carboidratos (em gramas): "))
-        proteinas = float(input("Proteínas (em gramas): "))
-        gorduras = float(input("Gorduras (em gramas): "))
+def listar_alimentos(id_pct):
+    registros = buscar_registro_nutricional_por_codigo_paciente(id_pct)
+    print("Refeicoes:")
+    listar_dados(registros)
+    return registros
+
+def editar_registro(id_pct):
+    limpa_tela()
+    nome_sistema()
+    registros = listar_alimentos(id_pct)
+    idx = int(input("Digite o número do registro que deseja editar: "))
+    
+    reg = [r for r in registros if r.codigo == idx]
+    if len(reg) > 0:
+        reg = reg[0]
+    else:
+        print("Nao encontrado!")
+        return
+
+    for chave in reg:
+        if chave in [ "codigo" ]:
+            continue
+        novo_valor = input(f"{chave.capitalize()} [atual: {reg[chave]}]: ")
+        if novo_valor:
+            reg[chave] = novo_valor
         
-        calorias = (carboidratos * 4) + (proteinas * 4) + (gorduras * 9)
-        print(f"Calorias: {calorias}")
+    reg.calorias = calc_calorias(reg.proteinas, reg.gorduras, reg.carboidratos)
+    atualizar_registro_nutricional(idx, id_pct, 
+        reg.nome, reg.data, reg.proteinas, reg.gorduras, reg.carboidratos)
 
-        data_hora = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        registro = {
-            "Data e Hora": data_hora,
-            "Alimento": alimento,
-            "Carboidratos (g)": carboidratos,
-            "Proteinas (g)": proteinas,
-            "Calorias": calorias,
-            "Gorduras (g)": gorduras
-        }
-        self.registros.append(registro)
-        self.salvar_em_json("alimentos.json")
-        input("Pressione Enter para continuar...")
-
-    def listar_registros(self):
-        limpa_tela()
-        nome_registro_alimentos()
-        if not self.registros:
-            print("Nenhum registro encontrado.")
-        else:
-            for idx, registro in enumerate(self.registros, start=1):
-                print(f"Registro {idx}:")
-                for chave, valor in registro.items():
-                    print(f"  {chave}: {valor}")
-                print('')
-        input("Pressione Enter para continuar...")
-
-    def editar_registro(self):
-        limpa_tela()
-        nome_registro_alimentos()
-        self.listar_registros()
-        idx = int(input("Digite o número do registro que deseja editar: ")) - 1
-        
-        if 0 <= idx < len(self.registros):
-            registro = self.registros[idx]
-            for chave in ["Alimento", "Carboidratos (g)", "Proteinas (g)", "Gorduras (g)"]:
-                novo_valor = input(f"{chave} atual ({registro[chave]}): ")
-                if novo_valor:
-                    registro[chave] = float(novo_valor) if chave != "Alimento" else novo_valor
-            
-            registro["Calorias"] = (registro["Carboidratos (g)"] * 4) + (registro["Proteinas (g)"] * 4) + (registro["Gorduras (g)"] * 9)
-            self.salvar_em_json("alimentos.json")
-            print("Registro atualizado com sucesso.")
-        else:
-            print("Registro não encontrado.")
-        input("Pressione Enter para continuar...")
-
-    def apagar_registro(self):
-        limpa_tela()
-        nome_registro_alimentos()
-        self.listar_registros()
-        idx = int(input("Digite o número do registro que deseja apagar: ")) - 1
-        
-        if 0 <= idx < len(self.registros):
-            del self.registros[idx]
-            self.salvar_em_json("alimentos.json")
-            print("Registro apagado com sucesso.")
-        else:
-            print("Registro não encontrado.")
-        input("Pressione Enter para continuar...")
-
-    def salvar_em_json(self, nome_arquivo):
-        try:
-            with open(nome_arquivo, 'w') as file:
-                json.dump(self.registros, file, indent=4)
-            print("\nAlimento(s) registrado(s) com sucesso.")
-        except Exception as e:
-            print(f"Erro ao registrar o alimento: {e}")
-
-    def carregar_de_json(self, nome_arquivo):
-        if os.path.exists(nome_arquivo):
-            try:
-                with open(nome_arquivo, 'r') as file:
-                    self.registros = json.load(file)
-            except Exception as e:
-                print(f"Erro ao carregar registros: {e}")
+def apagar_registro(id_pct):
+    limpa_tela()
+    nome_sistema()
+    registros = listar_registros(id_pct)
+    idx = int(input("Digite o número do registro que deseja apagar: "))
+    if idx == "":
+        print_wait("Operacao cancelada.")
+    elif apagar_registro_nutricional(idx):
+        print_wait("Apagado com sucesso.")
+    else:
+        print_wait("Não encontrado.")
 
 def exibir_menu():
     while True:
         limpa_tela()
-        nome_registro_alimentos()
+        nome_sistema()
         print("1 - Registrar")
         print("2 - Listar")
         print("3 - Editar")
@@ -126,9 +96,3 @@ def exibir_menu():
         else:
             print("Opção inválida, por favor tente novamente.")
             input("Pressione Enter para continuar...")
-
-if __name__ == "__main__":
-    limpa_tela()
-    nome_registro_alimentos()
-    registro = RegistroNutricional()
-    exibir_menu()

@@ -21,14 +21,18 @@ def nome_sistema():
 	print(titulo, "versão 1.0")
 	print()
 
-
-
 # exibe os dados de uma variável dicionário na tela no formato de tabela
 def listar_dados(dicionario):
 	# cria um objeto do tipo tabela
 	tabela = PrettyTable()
 	# obtem os nomes dos campos da variável dicionario
-	campos = list(dicionario.keys())
+	if len(dicionario) == 0:
+		tabela.field_names = ["Sem registros ainda!"]
+		print(tabela)
+		print()
+		return
+
+	campos = list(dicionario[0].keys())
 	# define os títulos da tabela
 	tabela.field_names = campos
 
@@ -103,7 +107,7 @@ def menu_padrao(titulo, opcoes):
 			continue
 		if choice == 0 or choice > len(opcoes):
 			return
-		print("\n")
+		print()
 		if a := acoes[choice-1]:
 			a()
 
@@ -125,7 +129,7 @@ def pergunta_loop(msg, checar):
 			return resp
 
 
-def print_wait(msg):
+def print_wait(msg=""):
 	if msg:
 		print(msg)
 	return input("Pressione Enter para continuar...")

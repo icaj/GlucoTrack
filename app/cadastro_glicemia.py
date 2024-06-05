@@ -4,7 +4,7 @@ from util.util import *
 
 form_glicemia = [
 	"Data e hora da afericao [dd/mes hh:min] : ",
-	lambda u: u.strptime(formato_dh.user),
+	lambda u: datetime.strptime(u, formato_dh.user),
 	"Valor registrado: ", float,
 ]
 
@@ -33,7 +33,12 @@ def glicemia_listar(id_pct, w=True):
 def glicemia_editar(id_pct):
 	registros = glicemia_listar(id_pct, w=False)
 	cod = input("ID do que deseja editar: ")
-	gli = filter(lambda r: r.codigo == cod, registros)[0]
+	gli = filter(lambda r: r.codigo == cod, registros)
+    if len(gli) > 0:
+        gli = gli[0]
+    else:
+        print("Nao encontrado!")
+        return
 	resp = form_padrao(form_glicemia, [ 
 		gli.data, gli.valor,
 	])

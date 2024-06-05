@@ -12,7 +12,7 @@ def inicio():
         "Entrar", entrar,
         "Cadastrar usuário", cadastrar_usuario,
     ])
-    print("Obrigado por usar o GlucoTrack.\n")
+    print("Obrigado por usar o GlucoTrack.")
     exit()
     
 if __name__ == "__main__":
