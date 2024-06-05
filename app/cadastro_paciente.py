@@ -1,5 +1,5 @@
-from crud.crud_paciente import inserir_paciente, buscar_paciente_por_codigo_usuario, atualizar_paciente
-from util.util import limpa_tela, nome_sistema, descricao_tipo_diabete, descricao_sexo
+from crud.crud_paciente import *
+from util.util import *
 
 # cadastra usuario com email e senha
 def cadastrar_paciente(codigo_usuario):
@@ -67,14 +67,8 @@ def listar_dados_paciente(codigo_usuario):
     print("Tipo diabetes: ", paciente.codigo_diabete, "-", descricao_tipo_diabete(paciente.codigo_diabete))
     print("Comorbidades:  ", paciente.comorbidades)
     print()
-
-    # pergunta se deseja alterar
-    opcao = input("Deseja alterar? (S/N): ")
-    while(opcao.upper() != 'S' and opcao.upper() != 'N'):
-        opcao = input("Deseja alterar? (S/N): ")
-
-    if opcao.upper() == 'S':
-        # mostra tela de alteração de dados do paciente
+    
+    if pergunta_sn("Deseja alterar?"):
         alterar_paciente(codigo_usuario)
 
 # Tela para alteração de dados do paciente

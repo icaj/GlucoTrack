@@ -8,7 +8,7 @@ def limpa_tela():
 def nome_registro_alimentos():
     print("=========================================================================================")
     print("======================== Registro de Alimentos - Versão 1.0 =============================")
-    print("")
+    print('')
 
 class RegistroNutricional:
     def __init__(self):
@@ -49,7 +49,7 @@ class RegistroNutricional:
                 print(f"Registro {idx}:")
                 for chave, valor in registro.items():
                     print(f"  {chave}: {valor}")
-                print("")
+                print('')
         input("Pressione Enter para continuar...")
 
     def editar_registro(self):

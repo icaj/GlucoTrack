@@ -71,8 +71,8 @@ def _atualizar(medicacao):
     _salvar_todos(medicacoes)
     return encontrou
 
-def inserir_medicacao(codigo_paciente, nome, dosagem, hora_inical, periodicidade, lembrar):
-    medicacao = Medicacao(None, codigo_paciente, nome, dosagem, hora_inical, periodicidade, lembrar)
+def inserir_medicacao(codigo_paciente, nome, dosagem, hora_inicial, periodicidade, lembrar):
+    medicacao = Medicacao(None, codigo_paciente, nome, dosagem, hora_inicial, periodicidade, lembrar)
     return _inserir(medicacao)
     
 # faz uma busca do registro no arquivo pelo codigo especificado
