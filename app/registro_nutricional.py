@@ -1,5 +1,5 @@
 import json
-from datetime import datetime
+import datetime
 from crud.crud_registro_nutricional import *
 from util.util import *
 import os

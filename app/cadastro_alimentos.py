@@ -1,7 +1,7 @@
 from crud.crud_registro_nutricional import *
 from util.util import *
 import json
-from datetime import datetime
+import datetime
 
 
 form_alimentos = [

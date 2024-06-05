@@ -1,4 +1,4 @@
-from datetime import datetime
+import datetime
 from crud.crud_medicacao import *
 from crud.crud_paciente import *
 from util.util import *

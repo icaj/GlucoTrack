@@ -1,5 +1,5 @@
 from dao.glicemiaDAO import GlicemiaDAO
-from datetime import datetime
+import datetime
 from util.util import *
 
 form_glicemia = [
@@ -19,7 +19,7 @@ def glicemia_tela(id_pct):
     ])
 
 def glicemia_nova(id_pct):
-    dados = form_padrao(form_medicacao)
+    dados = form_padrao(form_glicemia)
     return inserir_glicemia(id_pct, *dados)
 
 def glicemia_listar(id_pct, w=True):
