@@ -1,6 +1,10 @@
 from dao.glicemiaDAO import GlicemiaDAO
 from datetime import datetime
 
+def tela_glicemia(codigo_paciente):
+    # menu_padrao("Home > Glicemia", [])
+    pass
+
 def cadastrar_glicemia(codigo_paciente):
 
     data = input("Informe a data do registro de glicose (dd/mm/aaaa): ")

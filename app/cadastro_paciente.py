@@ -3,12 +3,7 @@ from util.util import limpa_tela, nome_sistema, descricao_tipo_diabete, descrica
 
 # cadastra usuario com email e senha
 def cadastrar_paciente(codigo_usuario):
-    
-    limpa_tela()
-    nome_sistema()
-
     print("Cadastro de Paciente")
-    print()
 
     # solicita nome
     nome = input("Nome: ")
@@ -56,9 +51,6 @@ def cadastrar_paciente(codigo_usuario):
 
 # exibe dados cadastrais do paciente na tela
 def listar_dados_paciente(codigo_usuario):
-    limpa_tela()
-    nome_sistema()
-
     # busca no arquivo dados do paciente a partir do codigo do usuario
     paciente = buscar_paciente_por_codigo_usuario(codigo_usuario)
 

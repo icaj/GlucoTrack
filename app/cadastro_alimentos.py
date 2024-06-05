@@ -3,13 +3,12 @@ from util.util import limpa_tela, nome_sistema
 import json
 from datetime import datetime
 
+def tela_alimentos(codigo_paciente):
+    # menu_padrao("Home > Alimentos", [])
+    pass
+    
 # tela de adição de alimentos (registro nutricional) 
 def adicionar_alimento(codigo_paciente):
-    limpa_tela()
-    nome_sistema()
-    print("Registro de Alimentos")
-    print("")
-
     data_hora = datetime.now()
     alimento = input("Nome do alimento        : ")
     carboidratos = float(input("Carboidratos (em gramas): "))

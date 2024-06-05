@@ -1,48 +1,43 @@
 from datetime import datetime
-from dao.medicacaoDAO import MedicacaoDAO
-from entidades.medicacao import Medicacao
 from crud.crud_medicacao import inserir_medicacao, buscar_medicacao, apagar_medicacao, buscar_medicacoes_por_paciente, atualizar_medicacao
 from crud.crud_paciente import buscar_paciente_por_codigo_usuario
 from util.util import listar_dados, limpa_tela, nome_sistema
 
+def tela_medicacao(codigo_paciente):
+	menu_padrao("Home > Medicacao", [
+		"Nova", 
+		lambda: nova_medicacao(codigo_paciente),
+		"Listar", 
+		lambda:	listar_medicacoes(codigo_paciente),
+		"Editar", 
+		lambda: editar_medicacao(codigo_paciente),
+	])
+
+
 def nova_medicacao(codigo_paciente):
-	codigo = 0
 	nome = input("Nome da medicacao: ")
 	dosagem = input("Dose prescrita: ")
-	print("""\
-Insira os horarios de administracao diaria HH:MM,
-para encerrar digite algo invalido:\n""")
-	i = 1
-	horarios = []
-	while True:
-		try:
-			h = input(f"{i}\t").strip()
-			if h == "":
-				continue
-			h = h.split(":")
-			h = datetime.time(int(h[0]), int(h[1]))
-		except:
-			break
-		else:
-			horarios.append(h)
-			i += 1
-	horarios.sort(key=lambda t: t.hour*60+t.minute)
+	horario = input("Horario diario inicial: ")
+	intervalo = input("Tomar a cada quantas horas: ")
+	
 	lembrar = input("Deseja configurar alarmes para esses horarios? [s/n]")
-	if lembrar == "s":
-		lembrar = True
-	elif lembrar == "n":
-		lembrar = False
-	else:
-		print("Nao entendi, entao suponho que nao deseja")
-		lembrar = False	
-	return Medicacao(codigo, codigo_paciente, nome, dosagem, horarios, lembrar)
+	match lembrar:
+		case "s" | "S": 
+			lembrar = True 
+		case "n" | "N":
+			lembrar = False
+		case _: 
+			lembrar = False
+			print("Nao entendi, entao suponho que nao deseja")
+	
+	inserir_medicacao(codigo_paciente, nome, 
+		dosagem, horario, intervalo, lembrar)
 
-def listar_medicacoes(codigo_usaurio):
-	paciente = buscar_paciente_por_codigo_usuario(codigo_usaurio)
-	medicacoes = buscar_medicacoes_por_paciente(paciente.codigo)
-
-	limpa_tela()
-	nome_sistema()
+def listar_medicacoes(codigo_paciente):
+	medicacoes = buscar_medicacoes_por_paciente(codigo_paciente)
 	print("Medicações")
 	listar_dados(medicacoes)
-	input("pressione qualquer tecla...")
+	input("pressione Enter para continuar...")
+
+def editar_medicacao():
+	pass
