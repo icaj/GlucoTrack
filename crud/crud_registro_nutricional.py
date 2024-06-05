@@ -3,17 +3,17 @@ from datetime import datetime
 import jsonpickle
 import os
 
-# caminho para o arquivo de dados no computador
+
 arquivo = 'dados/registros_nutricionais.json'
 
-# se não existir o arquivo, cria um arquivo vazio
+
 def _criar_bd():
     if not os.path.exists(arquivo):
         with open(arquivo, 'w') as f:
             buf = jsonpickle.encode([])
             f.write(buf)
 
-# carrega todos os registros do arquivo
+
 def _ler_todos():
         with open(arquivo, 'r') as f:
             buf = f.read()
@@ -25,12 +25,16 @@ def _salvar_todos(registros):
         buf = jsonpickle.encode(registros)
         f.write(buf)
 
-# insere um registro no arquivo.
-# devolve o código se gravou com sucesso.
-# devolve -1 se registro nao contem o codigo do paciente
-# devolve um valor maior que 0 se cadastrado com sucesso
+
+
+
+
+
+
+
 def _inserir(registro_nutricional):
-    # valida se o campo codigo_paciente está preenchindo
+
+
     if registro_nutricional.codigo_paciente == None:
         return -1
       
@@ -53,8 +57,9 @@ def _inserir(registro_nutricional):
     _salvar_todos(registros_nutricionais)
     return registro_nutricional_dic['codigo']
 
-# atualiza um registro no banco
-# se não encontrar devolve -1
+
+
+
 def _atualizar(registro_nutricional):
     encontrou = False
     registros_nutricionais = _ler_todos()
@@ -74,14 +79,16 @@ def _atualizar(registro_nutricional):
 
     return encontrou
 
-# insere um registro no arquivo.
-# devolve o código se gravou com sucesso.
-# devolve -1 se registro pesquisado nao contem o codigo do paciente
+
+
+
+
+
 def inserir_registro_nutricional(codigo_paciente, nome, data, calorias, proteinas, gorduras, carboidratos):
     registro_nutricional = RegistroNutricional(codigo_paciente, nome, data, calorias, proteinas, gorduras, carboidratos)
     return _inserir(registro_nutricional)
 
-# faz uma busca do registro no arquivo pelo codigo especificado
+
 def buscar_registro_nutricional_por_codigo(codigo):
     registros_nutricionais = _ler_todos()
     for r in registros_nutricionais:
@@ -89,7 +96,7 @@ def buscar_registro_nutricional_por_codigo(codigo):
             return RegistroNutricional(r['codigo'], r['codigo_paciente'], r['nome'], datetime.strptime(r['data'], "%d/%m/%Y %H:%M"), r['calorias'], r['proteinas'], r['gorduras'], r['carboidratos'])
     return None
 
-# faz uma busca no arquivo pelo registro com o codigo dopaciente especificado
+
 def buscar_registro_nutricional_por_codigo_paciente(codigo_paciente):
     registros = _ler_todos()
     registros_do_paciente = []
@@ -104,7 +111,7 @@ def atualizar_registro_nutricional(codigo, codigo_paciente, nome, data, calorias
     registro_nutricional = RegistroNutricional(codigo, codigo_paciente, nome, data, calorias, proteinas, gorduras, caboidratos)
     return _atualizar(registro_nutricional)
 
-# remove um registro do banco a partir do codigo especificado
+
 def apagar_registro_nutricional(codigo):
     registros_nutricionais = _ler_todos()
     nova_lista_registros_nutricionais = []

@@ -28,7 +28,7 @@ def alimentos_tela(id_pct):
 def calc_calorias(pr, go, ca):
     return (ca * 4) + (pr * 4) + (go * 9)
 
-# tela de adição de alimentos (registro nutricional) 
+
 def alimentos_novo(id_pct):
     dados = form_padrao(form_alimentos)
     calorias = calc_calorias(*dados[1:])

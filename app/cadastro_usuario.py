@@ -4,7 +4,7 @@ from crud.crud_usuario import *
 from app.cadastro_paciente import *
 from util.util import *
 
-# cadastra usuario com email e senha
+
 def cadastrar_usuario():
     
     limpa_tela()
@@ -37,11 +37,11 @@ def cadastrar_usuario():
         print()
         print("Usuário cadastrado com sucesso!")
         input("Pressione qualquer tecla para voltar")
-        
-        # cadastra paciente
+
+
         cadastrar_paciente(codigo_usuario)
 
-# tenta logar o usuario com email e senha
+
 def logar():
     email = ''
     senha = ''

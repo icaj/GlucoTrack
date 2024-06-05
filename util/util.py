@@ -18,11 +18,13 @@ def nome_sistema():
     print(titulo, "versão 1.0")
     print()
 
-# exibe os dados de uma variável dicionário na tela no formato de tabela
+
 def listar_dados(dicionario):
-    # cria um objeto do tipo tabela
+
+
     tabela = PrettyTable()
-    # obtem os nomes dos campos da variável dicionario
+
+
     if len(dicionario) == 0:
         tabela.field_names = ["Sem registros ainda!"]
         print(tabela)
@@ -30,7 +32,8 @@ def listar_dados(dicionario):
         return
 
     campos = list(dicionario[0].keys())
-    # define os títulos da tabela
+
+
     tabela.field_names = campos
 
     linha = ''
@@ -41,13 +44,14 @@ def listar_dados(dicionario):
 
     print(tabela)
 
-# função que valida se uma string contem um endereço de e-mail
-# devolve True caso seja um endereço de e-mail ou False caso não seja
+
+
+
 def validar_email(email):
     padrao = r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$'
     return re.match(padrao, email) is not None
 
-# função que retorna a descrição de um tipo de diabetes a partir de seu código
+
 def descricao_tipo_diabete(codigo):
     arquivo = "dados/tipos_diabetes.json"
 
@@ -68,7 +72,7 @@ def descricao_tipo_diabete(codigo):
         if r['codigo'] == codigo:
             return r['descricao']
 
-# função que retorna a descrição de um sexo a partir de seu código
+
 def descricao_sexo(codigo):
     arquivo = "dados/sexo.json"
 
