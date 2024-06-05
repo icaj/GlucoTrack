@@ -1,9 +1,8 @@
 from dao.usuarioDAO import UsuarioDAO
 from entidades.usuario import Usuario
-from crud.crud_usuario import login
-from app.cadastro_paciente import cadastrar_paciente
-from util.util import limpa_tela, nome_sistema
-from util.util import validar_email
+from crud.crud_usuario import *
+from app.cadastro_paciente import *
+from util.util import *
 
 # cadastra usuario com email e senha
 def cadastrar_usuario():

@@ -1,4 +1,4 @@
-from crud.crud_registro_nutricional import inserir_registro_nutricional
+from crud.crud_registro_nutricional import *
 from util.util import *
 import json
 from datetime import datetime

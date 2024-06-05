@@ -130,9 +130,8 @@ def print_wait(msg):
 		print(msg)
 	return input("Pressione Enter para continuar...")
 
-def form_padrao(list_msg, list_anterior, msg_erro):
+def form_padrao(list_msg, list_anterior=None, msg_erro="Entrada invalida..."):
 	reg = []
-	msg_erro = msg_erro or "Entrada invalida..."
 	j = -1 
 	for i, m in enumerate(list_msg):
 		if type(m) != str:

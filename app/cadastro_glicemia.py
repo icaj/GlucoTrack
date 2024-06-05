@@ -1,5 +1,6 @@
 from dao.glicemiaDAO import GlicemiaDAO
 from datetime import datetime
+from util.util import *
 
 form_glicemia = [
 	"Data e hora da afericao [dd/mes hh:min] : ",
