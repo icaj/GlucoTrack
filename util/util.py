@@ -98,4 +98,5 @@ def menu_padrao(titulo, opcoes):
         if a := acoes[choice-1]:
             a()
 
-def editar_p
+def editar_paciente(codigo_usaurio):
+    pass
