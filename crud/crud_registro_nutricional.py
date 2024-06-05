@@ -107,8 +107,11 @@ def atualizar_registro_nutricional(codigo, codigo_paciente, nome, data, calorias
 def apagar_registro_nutricional(codigo):
     registros_nutricionais = _ler_todos()
     nova_lista_registros_nutricionais = []
+    done = False
     for r in registros_nutricionais:
         if r['codigo'] != codigo:
             nova_lista_registros_nutricionais.append(r)
-
+        else:
+            done = True
     _salvar_todos(registros_nutricionais)
+    return True
