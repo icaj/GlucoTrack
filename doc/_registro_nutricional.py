@@ -1,4 +1,4 @@
-import json
+import jsonpickle
 from datetime import datetime
 import os
 
@@ -89,7 +89,7 @@ class RegistroNutricional:
     def salvar_em_json(self, nome_arquivo):
         try:
             with open(nome_arquivo, 'w') as file:
-                json.dump(self.registros, file, indent=4)
+                file.write(jsonpickle.encode(self.registros))
             print("\nAlimento(s) registrado(s) com sucesso.")
         except Exception as e:
             print(f"Erro ao registrar o alimento: {e}")
@@ -98,7 +98,7 @@ class RegistroNutricional:
         if os.path.exists(nome_arquivo):
             try:
                 with open(nome_arquivo, 'r') as file:
-                    self.registros = json.load(file)
+                    self.registros = jsonpickle.decode(f.read())
             except Exception as e:
                 print(f"Erro ao carregar registros: {e}")
 

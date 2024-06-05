@@ -1,5 +1,5 @@
 from entidades.comorbidade import Comorbidade
-import json
+import jsonpickle
 import os
 
 # classe DAO para manipulação de usuarios no banco de dados (arquivos)
@@ -15,7 +15,7 @@ class ComorbidadeDAO:
             tipos = [ { "codigo": 1, "descricao": "Hipertensão" },
                       { "codigo": 2, "descricao": "Cardíaco(a)" } ]
             with open(self.arquivo, 'w') as f:
-                json.dump([], f)
+                f.write(jsonpickle.encode([]))
 
             self._grava_todos(tipos)
 
@@ -23,13 +23,13 @@ class ComorbidadeDAO:
     # carrega todos os registros do arquivo para a memória
     def _ler_todos(self):
         with open(self.arquivo, 'r') as f:
-            return json.load(f)
+            return jsonpickle.decode(f.read())
 
     # método de uso interno:
     # grava todos os registos para o arquivo
     def _grava_todos(self, registros):
         with open(self.arquivo, 'w') as f:
-            json.dump(registros, f, indent=4)
+            f.write(jsonpickle.encode(registros))
 
     # devolve o objeto no banco a partir do codigo especificado
     # se não encontrar retona None

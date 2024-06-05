@@ -1,5 +1,5 @@
 from entidades.usuario import Usuario
-import json
+import jsonpickle
 import os
 
 # caminho para o arquivo de dados no computador
@@ -9,20 +9,21 @@ def _criar_bd():
     # se não existir o arquivo, cria um arquivo vazio
     if not os.path.exists(arquivo):
         with open(arquivo, 'w') as f:
-            json.dump([], f)
+            buf = jsonpickle.encode([])
+            f.write(buf)
 
 def _ler_todos():
     _criar_bd()
 
     # carrega todos os registros do arquivo para a memória
     with open(arquivo, 'r') as f:
-        return json.load(f)
+        return jsonpickle.decode(f.read())
 
 def _salvar_todos(registros):
     _criar_bd()
-
     with open(arquivo, 'w') as f:
-        json.dump(registros, f, indent=4)
+        buf = jsonpickle.encode(registros)
+        f.write(buf)
 
 # insere um usuario no banco de dados se não existir um usuário com o mesmo e-mail cadastrado
 def _inserir(usuario):

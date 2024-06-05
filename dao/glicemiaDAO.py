@@ -1,7 +1,7 @@
 from dao.pacienteDAO import PacienteDAO
 from dao.usuarioDAO import UsuarioDAO
 from entidades.glicemia import Glicemia
-import json
+import jsonpickle
 import os
 
 # classe DAO para manipulação de registros de glicemia no banco de dados
@@ -15,19 +15,20 @@ class GlicemiaDAO:
     def __init__(self):
         if not os.path.exists(self.arquivo):
             f = open(self.arquivo, 'w')
-            json.dump([], f)
+            buf = jsonpickle.encode([])
+            f.write(buf)
 
     # método de uso interno:
     # carrega todos os registros do arquivo
     def _ler_todos(self):
         f = open(self.arquivo, 'r')
-        return json.load(f)
+        return jsonpickle.decode(f.read())
 
     # método de uso interno:
     # grava todos os registos para o arquivo
     def _grava_todos(self, registros):
         f = open(self.arquivo, 'w')
-        json.dump(registros, f, indent=4)
+        f.write(jsonpickle.encode(registros))
 
     # insere um registro no arquivo.
     # devolve o código se gravou com sucesso.

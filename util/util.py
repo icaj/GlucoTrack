@@ -3,15 +3,12 @@ import pyfiglet
 import re
 from datetime import date
 import os
-import json
+import jsonpickle
 from entidades.tipo_diabete import TipoDiabete
 import datetime
 
-formato_dh = { 
-    "hora" : "%H:%M",
-    "user" : "%d/%m %H:%M",
-    "save" : "%Y-%m-%d %H:%M",
-}
+formato_hora = "%H:%M"
+formato_data = "%d/%m/%y"
 
 def limpa_tela():
     os.system("cls" if os.name == "nt" else "clear")
@@ -62,10 +59,10 @@ def descricao_tipo_diabete(codigo):
                   { "codigo": 5, "descricao": "Não possui"} ]
 
         with open(arquivo, 'w') as f:
-            json.dump(tipos, f, indent=4)
+            f.write(jsonpickle.encode(tipos))
 
     with open(arquivo, "r") as f:
-        tipos = json.load(f)
+        tipos = jsonpickle.decode(f.read())
     
     for r in tipos:
         if r['codigo'] == codigo:
@@ -80,10 +77,10 @@ def descricao_sexo(codigo):
                   { "codigo": "M", "descricao": "Masculino" }]
 
         with open(arquivo, 'w') as f:
-            json.dump(tipos, f, indent=4)
+            f.write(jsonpickle.encode(tipos))
 
     with open(arquivo, "r") as f:
-        tipos = json.load(f)
+        tipos = jsonpickle.decode(f.read())
     
     for r in tipos:
         if r['codigo'] == codigo:

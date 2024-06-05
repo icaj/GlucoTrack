@@ -1,5 +1,5 @@
 from entidades.usuario import Usuario
-import json
+import jsonpickle
 import os
 
 # classe DAO para manipulação de usuarios no banco de dados (arquivos)
@@ -13,19 +13,20 @@ class UsuarioDAO:
     def __init__(self):
         if not os.path.exists(self.arquivo):
             with open(self.arquivo, 'w') as f:
-                json.dump([], f)
+                f.write(jsonpickle.encode([]))
 
     # método de uso interno:
     # carrega todos os registros do arquivo para a memória
     def _ler_todos(self):
         with open(self.arquivo, 'r') as f:
-            return json.load(f)
+            buf = f.read()
+            return jsonpickle.decode(buf)
 
     # método de uso interno:
     # grava todos os registos para o arquivo
     def _grava_todos(self, registros):
         with open(self.arquivo, 'w') as f:
-            json.dump(registros, f, indent=4)
+            f.write(jsonpickle.encode(registros))
 
     # insere um registro no arquivo.
     # devolve o código se gravou com sucesso.

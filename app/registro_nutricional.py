@@ -1,4 +1,3 @@
-import json
 from crud.crud_registro_nutricional import *
 from util.util import *
 import os
@@ -19,7 +18,7 @@ def alimentos_novo(id_pct):
     print(f"Calorias: {calorias}")
 
     data_hora = input("Data e hora da ingestao [dd/mes/yy hh:min] : ")
-    datetime.strptime(data_hora, formato_dh.user)
+    datetime.strptime(data_hora, f"{formato_data} {formato_hora}")
     
     resultado = inserir_registro_nutricional(id_pct, 
         alimento, data_hora, calorias, proteinas, gorduras, carboidratos)
@@ -72,7 +71,7 @@ def alimentos_apagar(id_pct):
     else:
         print_wait("Não encontrado.")
 
-def alimentos_tela():
+def alimentos_tela(id_pct):
     while True:
         limpa_tela()
         nome_sistema()
@@ -84,13 +83,13 @@ def alimentos_tela():
         opcao = input("Escolha uma opção: ")
         
         if opcao == '1':
-            alimentos_novo()
+            alimentos_novo(id_pct)
         elif opcao == '2':
-            alimentos_listar()
+            alimentos_listar(id_pct)
         elif opcao == '3':
-            alimentos_editar()
+            alimentos_editar(id_pct)
         elif opcao == '4':
-            alimentos_apagar()
+            alimentos_apagar(id_pct)
         elif opcao == '0':
             break
         else:

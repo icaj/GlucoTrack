@@ -3,7 +3,7 @@ from datetime import datetime
 
 form_glicemia = [
     "Data e hora da afericao [dd/mes/yy hh:min] : ",
-    lambda u: datetime.strptime(u, formato_dh.user),
+    lambda u: datetime.strptime(u, f"{formato_data} {formato_hora}"),
     "Valor registrado: ", float,
 ]
 

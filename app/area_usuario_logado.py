@@ -3,7 +3,7 @@ from app.cadastro_paciente import *
 from app.cadastro_medicacao import *
 from app.cadastro_glicemia import *
 from app.cadastro_usuario import *
-from app.cadastro_alimentos import *
+from app.registro_nutricional import *
 from crud.crud_paciente import *
 
 def tela_principal(id_usr):

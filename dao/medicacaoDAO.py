@@ -1,5 +1,5 @@
 from entidades.medicacao import Medicacao
-import json
+import jsonpickle
 import os
 
 # classe DAO para manipulação de medicacoes no banco de dados
@@ -13,19 +13,19 @@ class MedicacaoDAO:
     def __init__(self):
         if not os.path.exists(self.arquivo):
             with open(self.arquivo, 'w') as f:
-                json.dump([], f)
+                f.write(jsonpickle.encode([]))
 
     # método de uso interno:
     # carrega todos os registros do arquivo
     def _ler_todos(self):
         with open(self.arquivo, 'r') as f:
-            return json.load(f)
+            return jsonpickle.decode(f.read())
 
     # método de uso interno:
     # grava todos os registos para o arquivo
     def _grava_todos(self, registros):
         f = open(self.arquivo, 'w')
-        json.dump(registros, f, indent=4)
+        f.write(jsonpickle.encode(registros))
 
     def inserirPorDados(self, codigo_paciente, nome, hora_inical, periodo, lembrar):
         medicacao = Medicacao(None, codigo_paciente, nome, hora_inical, periodo, lembrar)

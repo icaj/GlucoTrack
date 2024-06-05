@@ -1,6 +1,6 @@
 from entidades.registro_nutricional import RegistroNutricional
 from datetime import datetime
-import json
+import jsonpickle
 import os
 
 # caminho para o arquivo de dados no computador
@@ -10,19 +10,20 @@ arquivo = 'dados/registros_nutricionais.json'
 def _criar_bd():
     if not os.path.exists(arquivo):
         with open(arquivo, 'w') as f:
-            json.dump([], f)
+            buf = jsonpickle.encode([])
+            f.write(buf)
 
 # carrega todos os registros do arquivo
 def _ler_todos():
-    _criar_bd()
-    with open(arquivo, 'r') as f:
-        return json.load(f)
+        with open(arquivo, 'r') as f:
+            buf = f.read()
+            return jsonpickle.decode(buf)
 
-# grava todos os registos para o arquivo
 def _salvar_todos(registros):
     _criar_bd()
     with open(arquivo, 'w') as f:
-        json.dump(registros, f, indent=4)
+        buf = jsonpickle.encode(registros)
+        f.write(buf)
 
 # insere um registro no arquivo.
 # devolve o código se gravou com sucesso.

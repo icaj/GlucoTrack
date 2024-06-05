@@ -7,7 +7,7 @@ form_medicacao = [
     "Nome da medicacao: ",
     "Dose prescrita: ",
     "Horario diario inicial: ", 
-    lambda u: time.strptime(u, formato_dh["hora"]),
+    lambda u: time.strptime(u, formato_hora),
     "Tomar a cada quantas horas: ", int, 
     "Alarmar nesses horarios? [s/n] ", checar_sn,
 ]

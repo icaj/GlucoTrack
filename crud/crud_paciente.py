@@ -1,5 +1,5 @@
 from entidades.paciente import Paciente
-import json
+import jsonpickle
 import os
 
 # caminho para o arquivo de dados no computador
@@ -9,22 +9,22 @@ arquivo = 'dados/pacientes.json'
 def _criar_bd():
     if not os.path.exists(arquivo):
         with open(arquivo, 'w') as f:
-            json.dump([], f)
+            buf = jsonpickle.encode([])
+            f.write(buf)
 
 # carrega todos os registros do arquivo para a memória
 def _ler_todos():
     _criar_bd()
 
     with open(arquivo, 'r') as f:
-        return json.load(f)
+        return jsonpickle.decode(f.read())
 
-# grava todos os registos para o arquivo
 def _salvar_todos(registros):
     _criar_bd()
-
     with open(arquivo, 'w') as f:
-        json.dump(registros, f, indent=4)
-
+        buf = jsonpickle.encode(registros)
+        f.write(buf)
+        
 # insere um paciente no arquivo se não existir um paciente para o mesmo usuario
 # devolve o código do paciente se gravou com sucesso.
 # devolve -1 se já existir um paciente para o mesmo usuario
