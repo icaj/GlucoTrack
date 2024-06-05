@@ -12,9 +12,9 @@ def tela_principal(id_usr):
 		"Dados Cadastrais",
 		lambda: listar_dados_paciente(id_usr),
 		"Medicacoes", 
-		lambda: tela_medicacao(id_pct),
+		lambda: medicacao_tela(id_pct),
 		"Glicemia", 
-		lambda: tela_glicemia(id_pct),
+		lambda: glicemia_tela(id_pct),
 		"Alimentos", 
 		lambda: alimentos_tela(id_pct),
 	])

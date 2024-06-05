@@ -8,7 +8,7 @@ form_glicemia = [
     "Valor registrado: ", float,
 ]
 
-def tela_glicemia(id_pct):
+def glicemia_tela(id_pct):
     menu_padrao("Home > Glicemia", [
         "Nova", 
         lambda: glicemia_nova(id_pct),
