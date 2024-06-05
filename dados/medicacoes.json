@@ -34,5 +34,7 @@
         "periodicidade": 6,
         "dosagem": "1 comprimido",
         "lembrar": "s"
-    }
-]
+    },
+    {
+        "codigo": 5,
+        "codigo_paciente": 

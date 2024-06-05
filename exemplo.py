@@ -13,7 +13,7 @@ from entidades.registro_nutricional import RegistroNutricional
 from dao.registroNutricionalDAO import RegistroNutricionalDAO
 from entidades.comorbidade import Comorbidade
 from app.cadastro_usuario import cadastrar_usuario
-from datetime import datetime
+import datetime
 import os
 
 def listar_registros_nutricionais(codigo_paciente):

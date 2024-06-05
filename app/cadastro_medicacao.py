@@ -1,13 +1,13 @@
-import datetime
 from crud.crud_medicacao import *
 from crud.crud_paciente import *
 from util.util import *
+import time
 
 form_medicacao = [
     "Nome da medicacao: ",
     "Dose prescrita: ",
     "Horario diario inicial: ", 
-    lambda u: datetime.strptime(u, formato_dh.hora),
+    lambda u: time.strptime(u, formato_dh["hora"]),
     "Tomar a cada quantas horas: ", int, 
     "Alarmar nesses horarios? [s/n] ", checar_sn,
 ]

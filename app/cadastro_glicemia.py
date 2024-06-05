@@ -1,9 +1,8 @@
-from dao.glicemiaDAO import GlicemiaDAO
-import datetime
 from util.util import *
+from datetime import datetime
 
 form_glicemia = [
-    "Data e hora da afericao [dd/mes hh:min] : ",
+    "Data e hora da afericao [dd/mes/yy hh:min] : ",
     lambda u: datetime.strptime(u, formato_dh.user),
     "Valor registrado: ", float,
 ]

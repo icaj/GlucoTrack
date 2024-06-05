@@ -1,13 +1,13 @@
 import json
-import datetime
 from crud.crud_registro_nutricional import *
 from util.util import *
 import os
+from datetime import datetime
 
 def calc_calorias(pr, go, ca):
     return (ca * 4) + (pr * 4) + (go * 9)
 
-def adicionar_registro(id_pct):
+def alimentos_novo(id_pct):
     limpa_tela()
     nome_sistema()
     alimento = input("Nome do alimento: ")
@@ -18,8 +18,8 @@ def adicionar_registro(id_pct):
     calorias = (carboidratos * 4) + (proteinas * 4) + (gorduras * 9)
     print(f"Calorias: {calorias}")
 
-    data_hora = input("Data e hora da ingestao [dd/mes hh:min] : ")
-    data_hora = datetime.strptime(data_hora, formato_dh.user)
+    data_hora = input("Data e hora da ingestao [dd/mes/yy hh:min] : ")
+    datetime.strptime(data_hora, formato_dh.user)
     
     resultado = inserir_registro_nutricional(id_pct, 
         alimento, data_hora, calorias, proteinas, gorduras, carboidratos)
@@ -30,16 +30,16 @@ def adicionar_registro(id_pct):
         print_wait("Registro cadastrado com sucesso!")
     return resultado
 
-def listar_alimentos(id_pct):
+def alimentos_listar(id_pct):
     registros = buscar_registro_nutricional_por_codigo_paciente(id_pct)
     print("Refeicoes:")
     listar_dados(registros)
     return registros
 
-def editar_registro(id_pct):
+def alimentos_editar(id_pct):
     limpa_tela()
     nome_sistema()
-    registros = listar_alimentos(id_pct)
+    registros = alimentos_listar(id_pct)
     idx = int(input("Digite o número do registro que deseja editar: "))
     
     reg = [r for r in registros if r.codigo == idx]
@@ -60,10 +60,10 @@ def editar_registro(id_pct):
     atualizar_registro_nutricional(idx, id_pct, 
         reg.nome, reg.data, reg.proteinas, reg.gorduras, reg.carboidratos)
 
-def apagar_registro(id_pct):
+def alimentos_apagar(id_pct):
     limpa_tela()
     nome_sistema()
-    registros = listar_registros(id_pct)
+    registros = alimentos_listar(id_pct)
     idx = int(input("Digite o número do registro que deseja apagar: "))
     if idx == "":
         print_wait("Operacao cancelada.")
@@ -72,27 +72,26 @@ def apagar_registro(id_pct):
     else:
         print_wait("Não encontrado.")
 
-def exibir_menu():
+def alimentos_tela():
     while True:
         limpa_tela()
         nome_sistema()
-        print("1 - Registrar")
-        print("2 - Listar")
-        print("3 - Editar")
-        print("4 - Apagar")
-        print("0 - Sair\n")
+        print("1. Registrar")
+        print("2. Listar")
+        print("3. Editar")
+        print("4. Apagar")
+        print("0. Sair\n")
         opcao = input("Escolha uma opção: ")
         
         if opcao == '1':
-            registro.adicionar_registro()
+            alimentos_novo()
         elif opcao == '2':
-            registro.listar_registros()
+            alimentos_listar()
         elif opcao == '3':
-            registro.editar_registro()
+            alimentos_editar()
         elif opcao == '4':
-            registro.apagar_registro()
+            alimentos_apagar()
         elif opcao == '0':
             break
         else:
-            print("Opção inválida, por favor tente novamente.")
-            input("Pressione Enter para continuar...")
+            print_wait("Opção inválida, por favor tente novamente.")

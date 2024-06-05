@@ -1,13 +1,13 @@
 from crud.crud_registro_nutricional import *
 from util.util import *
 import json
-import datetime
+from datetime import datetime
 
 
 form_alimentos = [
     "Nome do alimento: ",
-    "Data e hora da ingestao [dd/mes hh:min] : ", 
-    lambda u: datetime.strptime(u, formato_dh.user),
+    "Data e hora da ingestao [dd/mes/yy hh:min] : ", 
+    lambda u: datetime.strptime(u, formato_dh['hora']),
     "Proteínas (em gramas): ", float,
     "Gorduras (em gramas): ", float,
     "Carboidratos (em gramas): ", float,
