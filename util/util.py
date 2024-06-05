@@ -28,7 +28,7 @@ def listar_dados(dicionario):
 	# cria um objeto do tipo tabela
 	tabela = PrettyTable()
 	# obtem os nomes dos campos da variável dicionario
-	campos = list(dicionario[1].keys())
+	campos = list(dicionario.keys())
 	# define os títulos da tabela
 	tabela.field_names = campos
 
@@ -152,7 +152,8 @@ def form_padrao(list_msg, list_anterior=None, msg_erro="Entrada invalida..."):
 				if u != None:
 					break
 				print(msg_erro)
-			except: 
-				pass
+			except Exception as e: 
+				print(e)
+				
 		reg.append(u)
 	return reg
