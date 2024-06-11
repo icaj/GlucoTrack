@@ -13,7 +13,7 @@ from entidades.registro_nutricional import RegistroNutricional
 from dao.registroNutricionalDAO import RegistroNutricionalDAO
 from entidades.comorbidade import Comorbidade
 from app.cadastro_usuario import cadastrar_usuario
-from datetime import datetime
+import datetime
 import os
 
 def listar_registros_nutricionais(codigo_paciente):
@@ -197,30 +197,47 @@ def logar_usuario():
 
     return codigo
 
-#def cadastrar_usuario():
-#    
-#    limpa_tela()
-#    nome_sistema()
-#
-#    usuarioDAO = UsuarioDAO()
 
-#    print("Cadastro de Usuario")
-#    print("")
-#    email = str(input("Informe seu email: "))
-#    senha = str(input("Informe sua senha: "))
 
-#    usuario = Usuario(None, email, senha)
 
-#    codigo_usuario = usuarioDAO.inserir(usuario)
-#    if codigo_usuario == -1:
-#        print("")
-#        print("Já existe um usuário com este email")
-#        input("pressione qualquer tecla")
-#        return
-#    elif codigo_usuario > 0:
-#        print("")
-#        print("Usuário cadastrado com sucesso!")
-#        input("Pressione qualquer tecla para voltar")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 def tela_usuario_logado(codigo_usuario):
     limpa_tela()
@@ -230,7 +247,8 @@ def tela_usuario_logado(codigo_usuario):
 def escolha(codigo_usuario):
     opcao = int(input("Opção: "))
     match(opcao):
-        # cadastrar medicacoes
+
+
         case 1:
             pacienteDAO = PacienteDAO()
             paciente = pacienteDAO.buscar_por_codigo_usuario(codigo_usuario)
@@ -238,7 +256,7 @@ def escolha(codigo_usuario):
             tela_usuario_logado(codigo_usuario)
             escolha(codigo_usuario)
 
-        # listar medicacoes
+
         case 2:
             pacienteDAO = PacienteDAO()
             paciente = pacienteDAO.buscar_por_codigo_usuario(codigo_usuario)
@@ -246,7 +264,7 @@ def escolha(codigo_usuario):
             tela_usuario_logado(paciente.codigo)
             escolha(codigo_usuario)
 
-        # cadastrar glicemia
+
         case 3:
             pacienteDAO = PacienteDAO()
             paciente = pacienteDAO.buscar_por_codigo_usuario(codigo_usuario)
@@ -254,7 +272,7 @@ def escolha(codigo_usuario):
             tela_usuario_logado(paciente.codigo_usuario)
             escolha(codigo_usuario)
 
-        # lista glicemia
+
         case 4:
             pacienteDAO = PacienteDAO()
             paciente = pacienteDAO.buscar_por_codigo_usuario(codigo_usuario)
@@ -262,7 +280,7 @@ def escolha(codigo_usuario):
             tela_usuario_logado(paciente.codigo_usuario)
             escolha(codigo_usuario)
 
-        # cadastrar registro nutricional
+
         case 5:
             pacienteDAO = PacienteDAO()
             paciente = pacienteDAO.buscar_por_codigo_usuario(codigo_usuario)
@@ -270,7 +288,7 @@ def escolha(codigo_usuario):
             tela_usuario_logado(paciente.codigo_usuario)
             escolha(codigo_usuario)
 
-        # listar registros nutricionais
+
         case 6:
             pacienteDAO = PacienteDAO()
             paciente = pacienteDAO.buscar_por_codigo_usuario(codigo_usuario)
@@ -302,15 +320,19 @@ def escolha_inicial():
     opcao = int(input("Opção: "))
     match(opcao):
         case 1:
-            # Tentar logar no sistema
+
+
             codigo_usuario = logar_usuario()
             if codigo_usuario > 0:
-                # logado com sucesso
-                # verifica se já existe paciente registrado
+
+
+
+
                 pacienteDAO = PacienteDAO()
                 paciente = pacienteDAO.buscar_por_codigo_usuario(codigo_usuario)
                 if paciente != None:
-                    # paciente já registrado
+
+
                     tela_usuario_logado(paciente.codigo_usuario)
                     escolha(paciente.codigo_usuario)
                 else:
