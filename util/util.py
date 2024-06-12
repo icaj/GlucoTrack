@@ -3,7 +3,7 @@ import pyfiglet
 import re
 from datetime import date
 import os
-import jsonpickle
+import json
 from entidades.tipo_diabete import TipoDiabete
 import datetime
 
@@ -18,12 +18,8 @@ def nome_sistema():
     print(titulo, "versão 1.0")
     print()
 
-
 def listar_dados(dicionario):
-
-
     tabela = PrettyTable()
-
 
     if len(dicionario) == 0:
         tabela.field_names = ["Sem registros ainda!"]
@@ -32,7 +28,6 @@ def listar_dados(dicionario):
         return
 
     campos = list(dicionario[0].keys())
-
 
     tabela.field_names = campos
 
@@ -44,13 +39,9 @@ def listar_dados(dicionario):
 
     print(tabela)
 
-
-
-
 def validar_email(email):
     padrao = r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$'
     return re.match(padrao, email) is not None
-
 
 def descricao_tipo_diabete(codigo):
     arquivo = "dados/tipos_diabetes.json"
@@ -63,15 +54,14 @@ def descricao_tipo_diabete(codigo):
                   { "codigo": 5, "descricao": "Não possui"} ]
 
         with open(arquivo, 'w') as f:
-            f.write(jsonpickle.encode(tipos))
+            json.dump(tipos, f, indent=4)
 
     with open(arquivo, "r") as f:
-        tipos = jsonpickle.decode(f.read())
+        tipos = json.load(f)
     
     for r in tipos:
         if r['codigo'] == codigo:
             return r['descricao']
-
 
 def descricao_sexo(codigo):
     arquivo = "dados/sexo.json"
@@ -81,10 +71,10 @@ def descricao_sexo(codigo):
                   { "codigo": "M", "descricao": "Masculino" }]
 
         with open(arquivo, 'w') as f:
-            f.write(jsonpickle.encode(tipos))
+            json.dump(tipos, f, indent=4)
 
     with open(arquivo, "r") as f:
-        tipos = jsonpickle.decode(f.read())
+        tipos = json.load(f)
     
     for r in tipos:
         if r['codigo'] == codigo:
@@ -128,7 +118,6 @@ def pergunta_loop(msg, checar):
         resp = checar(resp)
         if resp != None:
             return resp
-
 
 def print_wait(msg=""):
     if msg:

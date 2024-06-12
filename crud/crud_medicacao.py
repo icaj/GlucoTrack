@@ -1,5 +1,6 @@
 from entidades.medicacao import Medicacao
-import jsonpickle
+import json
+import pickle
 import os
 
 

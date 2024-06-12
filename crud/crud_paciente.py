@@ -1,52 +1,35 @@
 from entidades.paciente import Paciente
-import jsonpickle
+import json
 import os
 
-
 arquivo = 'dados/pacientes.json'
-
 
 def _criar_bd():
     if not os.path.exists(arquivo):
         with open(arquivo, 'w') as f:
-            buf = jsonpickle.encode([])
-            f.write(buf)
-
+            json.dump([], f, indent=4)
 
 def _ler_todos():
     _criar_bd()
-
     with open(arquivo, 'r') as f:
-        return jsonpickle.decode(f.read())
+        return json.load(f)
 
 def _salvar_todos(registros):
     _criar_bd()
     with open(arquivo, 'w') as f:
-        buf = jsonpickle.encode(registros)
-        f.write(buf)
-
-
-
-
-
-
-
+        json.dump(registros, f, indent=4)
 
 def _inserir(paciente):
-
-
     if paciente.codigo_usuario == None:
         print("Paciente sem códico de usuário")
         return -2
       
     pacientes = _ler_todos()
 
-
     for r in pacientes:
         if r['codigo_usuario'] == paciente.codigo_usuario:
             print("Já existe um paciente com este usuário cadastrado")
             return -1
-
 
     proximo_codigo = 0
     for r in pacientes:
@@ -67,21 +50,11 @@ def _inserir(paciente):
     _salvar_todos(pacientes)
     return paciente_dic['codigo']
 
-
-
-
-
-
 def inserir_paciente(codigo_usuario, nome, idade, codigo_sexo, peso, altura, codigo_diabete, comorbidades):
 
     paciente = Paciente(None, codigo_usuario, nome, idade, codigo_sexo, peso, altura, codigo_diabete, comorbidades)
 
     return _inserir(paciente)
-
-
-
-
-
 
 def buscar_paciente(codigo):
     pacientes = _ler_todos()
@@ -118,17 +91,11 @@ def buscar_paciente_por_codigo_usuario(codigo_usuario):
     print("Paciente não encontrado")
     return -1
 
-
-
-
 def atualizar_paciente(codigo, codigo_usuario, nome, idade, codigo_sexo, peso, altura, codigo_diabete, comorbidades):
 
     paciente = Paciente(codigo, codigo_usuario, nome, idade, codigo_sexo, peso, altura, codigo_diabete, comorbidades)
 
     return _atualizar(paciente)
-
-
-
 
 def _atualizar(paciente):
     encontrou = False

@@ -1,5 +1,6 @@
 from entidades.usuario import Usuario
-import jsonpickle
+import json
+import pickle
 import os
 
 

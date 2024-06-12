@@ -41,7 +41,6 @@ def cadastrar_usuario():
 
         cadastrar_paciente(codigo_usuario)
 
-
 def logar():
     email = ''
     senha = ''
@@ -58,8 +57,4 @@ def logar():
         if senha == '':
             print("Senha inválida!")
 
-    resultado = login(email, senha)
-    if resultado == -1:
-        input("Usuário/senha inválido. Pressione qualquer tecla...")
-    
-    return resultado
+    return login(email, senha)

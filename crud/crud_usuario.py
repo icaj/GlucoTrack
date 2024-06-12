@@ -1,59 +1,38 @@
 from entidades.usuario import Usuario
-import jsonpickle
+import json
 import os
-
 
 arquivo = 'dados/usuarios.json'
 
 def _criar_bd():
-
-
     if not os.path.exists(arquivo):
         with open(arquivo, 'w') as f:
-            buf = jsonpickle.encode([])
-            f.write(buf)
+            json.dump([], f, indent = 4)
 
 def _ler_todos():
     _criar_bd()
-
-
     with open(arquivo, 'r') as f:
-        return jsonpickle.decode(f.read())
+        return json.load(f)
 
 def _salvar_todos(registros):
     _criar_bd()
     with open(arquivo, 'w') as f:
-        buf = jsonpickle.encode(registros)
-        f.write(buf)
-
+        json.dump(registros, f, indent = 4)
 
 def _inserir(usuario):
     usuarios = _ler_todos()
-
-
-
-
     for r in usuarios:
         if r['email'] == usuario.email:
             print("Já existe usuário com este e-mail")
             return -1
-
-
     proximo_codigo = 0
     for r in usuarios:
         if r['codigo'] > proximo_codigo:
             proximo_codigo = r['codigo']
 
-
     usuario_dic = {'codigo': proximo_codigo + 1, 'email': usuario.email, 'senha': usuario.senha}
-
-
     usuarios.append(usuario_dic)
-
-
     _salvar_todos(usuarios)
-
-
     return usuario_dic['codigo']
 
 def _atualizar(usuario):

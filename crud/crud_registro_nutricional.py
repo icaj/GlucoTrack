@@ -1,6 +1,7 @@
 from entidades.registro_nutricional import RegistroNutricional
 from datetime import datetime
-import jsonpickle
+import json
+import pickle
 import os
 
 
