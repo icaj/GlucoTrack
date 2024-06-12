@@ -10,7 +10,8 @@ def entrar():
         input("Usuário/senha inválidos!")
 
 def inicio():
-    menu_padrao("Login", [ "Entrar", entrar, "Cadastrar usuário", cadastrar_usuario ])
+    menu_padrao("Login", [ "Entrar", lambda: entrar(), 
+                           "Cadastrar usuário", lambda: cadastrar_usuario() ])
     print("Obrigado por usar o GlucoTrack.")
     exit()
     
