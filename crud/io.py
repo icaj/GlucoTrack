@@ -1,6 +1,7 @@
 from prettytable import PrettyTable
 import pyfiglet
 import os
+from util.dados import *
 from .crud import *
 
 WELCOME = None
@@ -124,7 +125,8 @@ def interagir_editar(tipo, id_pct):
 	reg = buscar(registros, idx)
 	if len(reg) > 0:
 		reg = from_user(tipo, reg[idx])
-		if atualizar(idx, reg):
+		reg['paciente'] = id_pct
+		if atualizar(idx, tipo(reg)):
 			print(CONCLUIDO)
 			return reg
 	print(PERDIDO)

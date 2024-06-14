@@ -2,7 +2,7 @@ from .padrao import Entidade
 from util.dados import *
 
 class Glicemia(Entidade):
-	arquivo = 'dados/glicemia.json'
+	# arquivo = 'dados/glicemia.json'
 	attr = [
 		"paciente",
 		"data",
@@ -14,7 +14,7 @@ class Glicemia(Entidade):
 	]
 
 class Medicacao(Entidade):
-	arquivo = 'dados/medicacao.json'
+	# arquivo = 'dados/medicacao.json'
 	attr = [
 		"paciente",
 		"nome",
@@ -32,7 +32,7 @@ class Medicacao(Entidade):
 	]
 
 class Paciente(Entidade):
-	arquivo = 'dados/paciente.json'
+	# arquivo = 'dados/paciente.json'
 	attr = [
 		"nome", 
 		"idade", 
@@ -51,7 +51,7 @@ class Paciente(Entidade):
 		return self.nome.split(' ', 1)[0]
 
 class Refeicao(Entidade):
-	arquivo = 'dados/refeicao.json'
+	# arquivo = 'dados/refeicao.json'
 	attr = [
 		"paciente",
 		"nome",

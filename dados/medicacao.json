@@ -1,12 +1,12 @@
 {
     "1": {
         "py/object": "entidades.todas.Medicacao",
+        "paciente": "1",
         "nome": "Nimesulida",
         "dosagem": "500mg",
         "hora_inicial": "09:00",
         "intervalo": 6,
-        "lembrar": false,
-        "paciente": "1"
+        "lembrar": false
     },
     "2": {
         "py/object": "entidades.todas.Medicacao",

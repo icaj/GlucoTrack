@@ -5,6 +5,11 @@ class Entidade:
 	def atributos(cls):
 		return cls.attr
 
+	@classmethod
+	def arquivo(cls):
+		name = str(cls.__name__)
+		return f"dados/{name.lower()}.json"
+
 	def __init__(self, *args):
 		atributos = self.atributos()
 		if len(args) == len(atributos):
@@ -29,7 +34,7 @@ class Entidade:
 		if len(args) == 1 and len(atributos) > 1:
 			args = args[0]
 		if len(args) != len(atributos):
-			raise TypeError("Argumentos invalidos")
+			raise TypeError(args)
 		for i, k in enumerate(atributos):
 			setattr(self, k, args[i])
 

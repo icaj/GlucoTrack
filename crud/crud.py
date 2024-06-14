@@ -22,13 +22,15 @@ def inserir(*args):
 	return atualizar(None, *args)
 
 def buscar(tipo, cond=None):
-	if type(tipo) == dict:
+	if not tipo:
+		return {}
+	elif type(tipo) == dict:
 		registros = tipo
 		return _filtrar(registros, cond)
 	elif type(tipo) is str:
 		arquivo = tipo
 	else:
-		arquivo = tipo.arquivo
+		arquivo = tipo.arquivo()
 	
 	if _criar(arquivo): 
 		return {}
@@ -49,12 +51,12 @@ def excluir(tipo, cond):
 	return 0
 
 def salvar(tipo, registros):
-	if len(registros) == 0: 
+	if (not tipo) or (not registros) or len(registros) == 0: 
 		return
 	elif type(tipo) is str:
 		arquivo = tipo
 	else:
-		arquivo = tipo.arquivo
+		arquivo = tipo.arquivo()
 	_criar(arquivo)
 	with open(arquivo, 'w') as f:
 		f.write(jsonpickle.encode(registros, indent=4))
@@ -64,7 +66,7 @@ def _from_args(*args):
 		return args[0]
 	elif len(args) > 1:
 		return args[0](*args[1:])
-	return None
+	raise TypeError(args)
 
 def _filtrar(registros, cond, k=True):
 	if cond == None:
