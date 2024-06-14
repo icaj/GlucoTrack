@@ -1,45 +1,16 @@
-from util.util import limpa_tela, nome_sistema
-from app.cadastro_paciente import listar_dados_paciente
-from app.cadastro_medicacao import listar_medicacoes
-from crud.crud_paciente import buscar_paciente_por_codigo_usuario
+from util.util import menu_padrao
+from app.cadastro_paciente import buscar_paciente_por_codigo_usuario, listar_dados_paciente
+from app.cadastro_medicacao import medicacao_tela
+from app.cadastro_glicemia import glicemia_tela
+from app.registro_nutricional import alimentos_tela
 
 def tela_principal(codigo_usuario):
-    limpa_tela()
-    nome_sistema()
-    paciente = buscar_paciente_por_codigo_usuario(codigo_usuario)
-    print("Usuário: ", paciente['nome'])
-    print()
-    menu_principal()
-    print()
-    opcao = input("Digite sua opção: ")
-
-    match opcao:
-        case '1':
-            listar_dados_paciente(codigo_usuario)
-            tela_principal(codigo_usuario)
-            
-        case '2':
-            listar_medicacoes(codigo_usuario)
-            tela_principal(codigo_usuario)
-            
-        case '3':
-            listar_alimentacao(codigo_usuario)
-            tela_principal(codigo_usuario)
-            
-        case '4':
-            listar_glicemia(codigo_usuario)
-            tela_principal(codigo_usuario)
-            
-        case '0':
-            pass
-
-        case _:
-            tela_principal(codigo_usuario)
-        
-def menu_principal():
-    print("1. Dados Cadastrais")
-    print("2. Medicacoes")
-    print("3. Glicemia")
-    print("4. Alimentos")
-    print("0. Sair")
-    
+	codigo_paciente = buscar_paciente_por_codigo_usuario(codigo_usuario)
+	print(codigo_paciente.nome)
+	menu_padrao("Home", ["Dados Cadastrais", lambda: listar_dados_paciente(codigo_usuario),
+						 "Medicacoes", lambda: medicacao_tela(codigo_paciente),
+						 "Glicemia", lambda: glicemia_tela(codigo_paciente),
+						 "Alimentos", lambda: alimentos_tela(codigo_paciente),
+	])
+	
+	

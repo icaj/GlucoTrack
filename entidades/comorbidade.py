@@ -1,3 +1,4 @@
+
 class Comorbidade:
 
     def __init__(self, codigo, descricao):

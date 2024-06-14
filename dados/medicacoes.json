@@ -6,7 +6,7 @@
         "hora_inicial": "8:00",
         "periodicidade": 5,
         "dosagem": "1 comprimido",
-        "lembrar": "S"
+        "lembrar": true
     },
     {
         "codigo": 2,
@@ -15,7 +15,7 @@
         "hora_inicial": "9:00",
         "periodicidade": 2,
         "dosagem": "1 comprimido",
-        "lembrar": "S"
+        "lembrar": true
     },
     {
         "codigo": 3,
@@ -24,7 +24,7 @@
         "hora_inicial": "8:00",
         "periodicidade": 5,
         "dosagem": "1 comprimido",
-        "lembrar": "S"
+        "lembrar": true
     },
     {
         "codigo": 4,
@@ -33,6 +33,33 @@
         "hora_inicial": "2:00",
         "periodicidade": 6,
         "dosagem": "1 comprimido",
-        "lembrar": "s"
+        "lembrar": true
+    },
+    {
+        "codigo": 5,
+        "codigo_paciente": 3,
+        "nome": "remedio teste",
+        "dosagem": "1 compr",
+        "hora_inicial": "08:00",
+        "periodicidade": 9,
+        "lembrar": true
+    },
+    {
+        "codigo": 6,
+        "codigo_paciente": 3,
+        "nome": "hjjgjhgjg",
+        "dosagem": "1 compr",
+        "hora_inicial": "06:00",
+        "periodicidade": 6,
+        "lembrar": true
+    },
+    {
+        "codigo": 7,
+        "codigo_paciente": 3,
+        "nome": "teste3",
+        "dosagem": "3 compr",
+        "hora_inicial": "05:32",
+        "periodicidade": 4,
+        "lembrar": false
     }
 ]

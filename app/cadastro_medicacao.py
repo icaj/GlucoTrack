@@ -1,63 +1,64 @@
-from datetime import datetime
-from dao.medicacaoDAO import MedicacaoDAO
+from crud.crud_medicacao import inserir_medicacao, buscar_medicacoes_por_paciente, atualizar_medicacao, apagar_medicacao
+from crud.crud_paciente import *
+from util.util import exibir_medicacoes, menu_padrao, checar_sn, formato_hora, form_padrao, print_wait
+import time
 from entidades.medicacao import Medicacao
-from crud.crud_medicacao import inserir_medicacao, buscar_medicacao, apagar_medicacao, buscar_medicacoes_por_paciente, atualizar_medicacao
-from crud.crud_paciente import buscar_paciente_por_codigo_usuario
-from util.util import listar_dados, limpa_tela, nome_sistema
 
-def nova_medicacao(codigo_paciente):
-	codigo = 0
-	nome = input("Nome da medicacao: ")
-	dosagem = input("Dose prescrita: ")
-	print("""\
-Insira os horarios de administracao diaria HH:MM,
-para encerrar digite algo invalido:\n""")
-	i = 1
-	horarios = []
-	while True:
-		try:
-			h = input(f"{i}\t").strip()
-			if h == "":
-				continue
-			h = h.split(":")
-			h = datetime.time(int(h[0]), int(h[1]))
-		except:
-			break
-		else:
-			horarios.append(h)
-			i += 1
-	horarios.sort(key=lambda t: t.hour*60+t.minute)
-	lembrar = input("Deseja configurar alarmes para esses horarios? [s/n]")
-	if lembrar == "s":
-		lembrar = True
-	elif lembrar == "n":
-		lembrar = False
-	else:
-		print("Nao entendi, entao suponho que nao deseja")
-		lembrar = False	
-	return Medicacao(codigo, codigo_paciente, nome, dosagem, horarios, lembrar)
+form_medicacao = [
+    "Nome da medicacao: ",
+    "Dose prescrita: ",
+    "Horario diario inicial: ", 
+    lambda u: time.strptime(u, formato_hora),
+    "Tomar a cada quantas horas: ", int, 
+    "Alarmar nesses horarios? [s/n] ", checar_sn,
+]
 
-def listar_medicacoes(codigo_usaurio):
-	paciente = buscar_paciente_por_codigo_usuario(codigo_usaurio)
-	medicacoes = buscar_medicacoes_por_paciente(paciente['codigo'])
+def medicacao_tela(id_pct):
+    menu_padrao("Home > Medicacao", [
+        "Nova", 
+        lambda: medicacao_nova(id_pct),
+        "Listar", 
+        lambda: medicacao_listar(id_pct),
+        "Editar", 
+        lambda: medicacao_editar(id_pct),
+        "Apagar",
+        lambda: medicacao_apagar(id_pct),
+    ])
 
-	limpa_tela()
-	nome_sistema()
-	print("Medicações:")
-	listar_dados(medicacoes)
-	opcao = input("Deseja alterar (S/N)?: ").upper()
-	while opcao != 'S' and opcao != 'N':
-		opcao = input("Deseja alterar (S/N)?: ")
-	
-	if opcao == "S":
-		print()
-		codigo_medicacao = input("Informe o código da medicacao: ")
-		medicacao = buscar_medicacao(int(codigo_medicacao))
-		nome = input("Nome: ")
-		hora_inicial = input("Hora inicial: ")
-		periodicidade = input("Periodicidade: ")
-		dosagem = input("Dosagem: ")
-		lembrar = input("Lembrar (S/N)?: ")
-		resultado = atualizar_medicacao(medicacao['codigo'], medicacao['codigo_paciente'], nome, dosagem, hora_inicial, periodicidade, lembrar)
-	
-	input("Digite qualquer tecla...")
+def medicacao_nova(id_pct):
+    dados = form_padrao(form_medicacao)
+    return inserir_medicacao(id_pct.codigo, dados[0], dados[1], dados[2], dados[3], dados[4])
+
+def medicacao_listar(id_pct, w=True):
+    medicacoes = buscar_medicacoes_por_paciente(id_pct.codigo)
+    print("Medicações: ")
+    exibir_medicacoes(medicacoes)
+    if w:
+        print_wait()
+    return medicacoes
+
+def medicacao_editar(id_pct):
+    registros = medicacao_listar(id_pct, w=False)
+    cod = input("ID do que deseja editar: ")
+    med = filter(lambda r: r.codigo == cod, registros)
+    if len(med) > 0:
+        med = med[0]
+    else:
+        print("Nao encontrado!")
+        return
+    resp = form_padrao(form_medicacao, [
+        med.nome, med.dosagem, med.hora_inicial, 
+        med.periodicidade, med.lembrar,
+    ])
+    return atualizar_medicacao(cod, id_pct.codigo, resp[0], resp[1], resp[2], resp[3], resp[4])
+
+def medicacao_apagar(id_pct):
+    medicacao_listar(id_pct)
+    cod = input("ID do quep deseja apagar: ")
+    if cod == "":
+        print_wait("Operacao cancelada.")
+    elif apagar_medicacao(cod):
+        print_wait("Apagado com sucesso.")
+    else:
+        print_wait("Não encontrado.")
+        

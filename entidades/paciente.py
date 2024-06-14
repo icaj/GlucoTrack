@@ -1,3 +1,5 @@
+
+
 class Paciente:
 
     def __init__(self, codigo, codigo_usuario, nome, idade, codigo_sexo, peso, altura, codigo_diabete, comorbidades):

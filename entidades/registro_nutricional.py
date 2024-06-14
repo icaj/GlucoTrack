@@ -1,3 +1,4 @@
+
 class RegistroNutricional:
 
     def __init__(self, codigo, codigo_paciente, nome, data, proteinas, gorduras, carboidratos):

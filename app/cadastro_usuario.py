@@ -1,11 +1,10 @@
 from dao.usuarioDAO import UsuarioDAO
 from entidades.usuario import Usuario
-from crud.crud_usuario import login
-from app.cadastro_paciente import cadastrar_paciente
-from util.util import limpa_tela, nome_sistema
-from util.util import validar_email
+from crud.crud_usuario import *
+from app.cadastro_paciente import *
+from util.util import *
 
-# cadastra usuario com email e senha
+
 def cadastrar_usuario():
     
     limpa_tela()
@@ -22,7 +21,7 @@ def cadastrar_usuario():
         email = input("Informe seu email: ")
     
     senha = input("Informe sua senha: ")
-    while(senha == ""):
+    while(senha == ''):
         print("Senha inválida!")
         senha = input("Informe sua senha: ")
         
@@ -38,29 +37,24 @@ def cadastrar_usuario():
         print()
         print("Usuário cadastrado com sucesso!")
         input("Pressione qualquer tecla para voltar")
-        
-        # cadastra paciente
+
+
         cadastrar_paciente(codigo_usuario)
 
-# tenta logar o usuario com email e senha
 def logar():
-    email = ""
-    senha = ""
+    email = ''
+    senha = ''
 
     limpa_tela()
     nome_sistema()
-    while(email == ""):
+    while(email == ''):
         email = input("Informe seu e-mail: ")
-        if email == "":
+        if email == '':
             print("e-mail inválido!")
     
-    while(senha == ""):
+    while(senha == ''):
         senha = input("Informe sua senha : ")
-        if senha == "":
+        if senha == '':
             print("Senha inválida!")
 
-    resultado = login(email, senha)
-    if resultado == -1:
-        input("Usuário/senha inválido. Pressione qualquer tecla...")
-    
-    return resultado
+    return login(email, senha)
