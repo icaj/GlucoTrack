@@ -31,5 +31,5 @@ def editar_alimento(codigo_usuario):
 def excluir_alimento(codigo_usuario):
     pass
 
-def listar_alimentos(codigo_usuario):
+def listar_alimentacao(codigo_usuario):
     pass
