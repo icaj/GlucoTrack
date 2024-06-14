@@ -1,5 +1,6 @@
 import re
 import time
+from datetime import datetime
 
 formato_data = "%d/%m/%y"
 formato_hora = "%H:%M"

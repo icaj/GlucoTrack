@@ -24,6 +24,18 @@ def nome_sistema():
 	titulo = pyfiglet.figlet_format("GlucoTrack", font='doom')
 	print(titulo, flush=True)
 
+def interagir_crud(tipo, id_pct):
+	interagir_tela(tipo.__name__, [
+		"Registrar", 
+		lambda: interagir_criar(tipo, id_pct),
+		"Listar", 
+		lambda: listar(tipo, por_paciente(id_pct)),
+		"Editar", 
+		lambda: interagir_editar(tipo, id_pct),
+		"Remover",
+		lambda: interagir_excluir(tipo, id_pct),
+	])
+
 def interagir_tela(titulo, opcoes):
 	acoes = opcoes[1::2]
 	opcoes = opcoes[0::2]
