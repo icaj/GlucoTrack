@@ -16,24 +16,24 @@ def tela_login():
 		welcome(pacientes[idx])
 		tela_principal(idx)
 		
-	interagir_tela("Login", [
+	tela_base("Login", [
 		"Entrar", entrar,
 		"Cadastrar usuário",
-		lambda: interagir_criar(Paciente, None),
+		lambda: perguntar_inserir(Paciente, None),
 		"Excluir",
-		lambda: interagir_excluir(Paciente, None),
+		lambda: perguntar_excluir(Paciente, None),
 	])
 
 
 def tela_principal(id_pct):
-	interagir_tela("Home", [
+	tela_base("Home", [
 		"Cadastro", 
-		lambda: listar(Paciente, id_pct),
+		lambda: perguntar_atualizar(Paciente, id_pct),
 		"Medicacao", 
-		lambda: interagir_crud(Medicacao, id_pct),
+		lambda: tela_crud(Medicacao, id_pct),
 		"Glicemia", 
-		lambda: interagir_crud(Glicemia, id_pct),
+		lambda: tela_crud(Glicemia, id_pct),
 		"Refeicao", 
-		lambda: interagir_crud(Refeicao, id_pct),
+		lambda: tela_crud(Refeicao, id_pct),
 	])
 	

@@ -6,8 +6,13 @@ class Entidade:
 		return cls.attr
 
 	@classmethod
+	def classname(cls, up=False):
+		cn = str(cls.__name__)
+		return cn.upper() if up else cn
+
+	@classmethod
 	def arquivo(cls):
-		name = str(cls.__name__)
+		name = str(cls.classname())
 		return f"dados/{name.lower()}.json"
 
 	def __init__(self, *args):
@@ -40,7 +45,7 @@ class Entidade:
 
 	def table(self):
 		tabela = PrettyTable()
-		tabela.field_names = ["atributo", "valor"]
+		tabela.field_names = [ "#", self.classname() ]
 		for k in self.atributos():
 			tabela.add_row([k, getattr(self, k)])
 		return tabela

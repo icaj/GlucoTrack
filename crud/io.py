@@ -4,12 +4,12 @@ import os
 from util.dados import *
 from .crud import *
 
-WELCOME = None
 CANCELADO = "Operacao cancelada."
 CONCLUIDO = "Operacao concluida."
 PERDIDO = "Não encontrado."
 INVALIDO = "Entrada invalida!"
 
+WELCOME = None
 def welcome(paciente):
 	nome = paciente.primeiro_nome().upper()
 	w = PrettyTable()
@@ -25,19 +25,19 @@ def nome_sistema():
 	titulo = pyfiglet.figlet_format("GlucoTrack", font='doom')
 	print(titulo, flush=True)
 
-def interagir_crud(tipo, id_pct):
-	interagir_tela(tipo.__name__, [
+def tela_crud(tipo, id_pct):
+	tela_base(tipo.classname(True), [
 		"Registrar", 
-		lambda: interagir_criar(tipo, id_pct),
+		lambda: perguntar_inserir(tipo, id_pct),
 		"Listar", 
 		lambda: listar(tipo, por_paciente(id_pct)),
 		"Editar", 
-		lambda: interagir_editar(tipo, id_pct),
+		lambda: perguntar_atualizar(tipo, id_pct),
 		"Remover",
-		lambda: interagir_excluir(tipo, id_pct),
+		lambda: perguntar_excluir(tipo, id_pct),
 	])
 
-def interagir_tela(titulo, opcoes):
+def tela_base(titulo, opcoes):
 	acoes = opcoes[1::2]
 	opcoes = opcoes[0::2]
 
@@ -91,7 +91,7 @@ def perguntar(msg, checar=None, padrao=None, err=None):
 		elif padrao != None:
 			return padrao
 
-def from_user(tipo, empty=None):
+def perguntar_tipo(tipo, empty=None) -> dict:
 	form = tipo.form[0::2]
 	check = tipo.form[1::2]
 	attr = tipo.atributos()[-len(form):]
@@ -102,19 +102,24 @@ def from_user(tipo, empty=None):
 			empty and getattr(empty, k))
 	return reg
 
-def interagir_criar(tipo, id_pct):
-	reg = from_user(tipo)
+def perguntar_inserir(tipo, id_pct):
+	reg = perguntar_tipo(tipo)
 	if id_pct != None:
 		reg['paciente'] = id_pct
 	return inserir(tipo(reg))
 
-def interagir_editar(tipo, id_pct):
-	registros = listar(tipo, por_paciente(id_pct))
+def perguntar_atualizar(tipo, id_pct):
+	if 'paciente' in tipo.atributos():
+		registros = listar(tipo, por_paciente(id_pct))
+	else:
+		registros = listar(tipo, id_pct)
 
 	if len(registros) == 0:
 		return None
-	elif len(registros) == 1 and perguntar("Deseja alterar?", checar_sn):
-		idx = next(iter(registros))
+	elif len(registros) == 1:
+		if not perguntar("Deseja alterar? (S/N) ", checar_sn):
+			return None
+		idx = next(iter(registros.keys()))
 	elif len(registros) > 1:
 		idx = perguntar("ID a editar: ", is_type(int), 
 			False, INVALIDO)
@@ -124,15 +129,19 @@ def interagir_editar(tipo, id_pct):
 	idx = str(idx)
 	reg = buscar(registros, idx)
 	if len(reg) > 0:
-		reg = from_user(tipo, reg[idx])
-		reg['paciente'] = id_pct
-		if atualizar(idx, tipo(reg)):
+		reg = perguntar_tipo(tipo, reg[idx])
+
+		if 'paciente' in tipo.atributos():
+			reg['paciente'] = id_pct
+		reg = tipo(reg)
+		print(reg.table())
+		if atualizar(idx, ):
 			print(CONCLUIDO)
 			return reg
 	print(PERDIDO)
 	return None
 
-def interagir_excluir(tipo, id_pct):
+def perguntar_excluir(tipo, id_pct):
 	registros = listar(tipo, por_paciente(id_pct))
 	idx = perguntar("ID a excluir: ", 
 		lambda x: str(int(x)), False, INVALIDO)
@@ -151,8 +160,8 @@ def listar(tipo, cond=None):
 		print(tabela)
 		print()
 		return {}
-	attr = next(r for r in registros.values()).atributos()
-	tabela.field_names = ['id', *attr]
+	attr = tipo.atributos()
+	tabela.field_names = ['#', *attr]
 	for c, r in registros.items():
 		tabela.add_row(r.row(c))
 	print(tabela)
