@@ -51,6 +51,7 @@ class Entidade:
 		return tabela
 
 	def row(self, idx=None, attr=None, t=None):
+		attr = attr or self.atributos()
 		
 		row = [ getattr(self, k) for k in attr ]
 		row = [ idx, *row ] if idx else row
