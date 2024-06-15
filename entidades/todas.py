@@ -27,7 +27,7 @@ class Medicacao(Entidade):
 		"Nome da medicacao: ", str,
 		"Dose prescrita: ", str,
 		"Horario diario inicial: ", checar_hora,
-		"Intervalo: ", is_type(int), 
+		"Intervalo: ", float, 
 		"Alarmar? (S/N) ", checar_sn,
 	]
 

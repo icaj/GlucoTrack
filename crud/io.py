@@ -26,15 +26,19 @@ def nome_sistema():
 	print(titulo, flush=True)
 
 def tela_crud(tipo, id_pct):
+	list_cond = id_pct
+	if 'paciente' in tipo.atributos():
+		list_cond = por_paciente(id_pct)
+
 	tela_base(tipo.classname(True), [
 		"Registrar", 
 		lambda: perguntar_inserir(tipo, id_pct),
 		"Listar", 
-		lambda: listar(tipo, por_paciente(id_pct)),
-		"Editar", 
+		lambda: listar(tipo, list_cond),
+		"Atualizar", 
 		lambda: perguntar_atualizar(tipo, id_pct),
 		"Remover",
-		lambda: perguntar_excluir(tipo, id_pct),
+		lambda: perguntar_remover(tipo, id_pct),
 	])
 
 def tela_base(titulo, opcoes):
@@ -121,7 +125,7 @@ def perguntar_atualizar(tipo, id_pct):
 			return None
 		idx = next(iter(registros.keys()))
 	elif len(registros) > 1:
-		idx = perguntar("ID a editar: ", is_type(int), 
+		idx = perguntar("ID a editar: ", int, 
 			False, INVALIDO)
 		if not idx:
 			print(CANCELADO)
@@ -134,14 +138,14 @@ def perguntar_atualizar(tipo, id_pct):
 		if 'paciente' in tipo.atributos():
 			reg['paciente'] = id_pct
 		reg = tipo(reg)
-		print(reg.table())
-		if atualizar(idx, ):
+		print(reg.row(t=True))
+		if atualizar(idx, reg):
 			print(CONCLUIDO)
 			return reg
 	print(PERDIDO)
 	return None
 
-def perguntar_excluir(tipo, id_pct):
+def perguntar_remover(tipo, id_pct):
 	registros = listar(tipo, por_paciente(id_pct))
 	idx = perguntar("ID a excluir: ", 
 		lambda x: str(int(x)), False, INVALIDO)

@@ -12,9 +12,6 @@ descricao_sexo = {
 	"m": "Masculino",
 }
 
-def is_type(tipo):
-	return lambda x: str(tipo(x))
-
 def checar_sexo(x):
 	if x in descricao_sexo:
 		return x.upper()

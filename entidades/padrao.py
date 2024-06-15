@@ -50,10 +50,16 @@ class Entidade:
 			tabela.add_row([k, getattr(self, k)])
 		return tabela
 
-	def row(self, idx=None):
-		row = [ getattr(self, k) 
-			for k in self.atributos() 
-		]
-		if idx == None:
-			return row
-		return [ idx, *row ]
+	def row(self, idx=None, attr=None, t=None):
+		
+		row = [ getattr(self, k) for k in attr ]
+		row = [ idx, *row ] if idx else row
+		
+		if t == True:
+			t = PrettyTable()
+			t.field_names = [ '#', *attr ] if idx else attr
+
+		if type(t) == PrettyTable:
+			t.add_row(row)
+			return t
+		else: return row
